@@ -1,10 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import { StyleSheet, ScrollView } from "react-native";
-import { v4 as uuid } from "uuid";
+import { UserContext } from "../context/ShoppingContext";
+
 import Product from "../components/Product";
 import Database from "../seed/data";
+import { CartButtonMenu } from "../components/Buttons";
 
 const ProductOverview = ({ navigation }) => {
+  const { cart } = useContext(UserContext);
+
+  navigation.setOptions({
+    headerRight: () => (
+      <CartButtonMenu
+        cartLength={cart.length}
+        onPress={() => navigation.navigate("Cart")}
+      />
+    ),
+  });
   return (
     <ScrollView style={styles.container}>
       {Database.map((data) => (

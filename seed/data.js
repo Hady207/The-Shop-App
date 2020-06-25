@@ -2,6 +2,7 @@ import { v4 as uuid } from "uuid";
 export default [
   {
     id: 1,
+    quantity: 1,
     image:
       "https://images.unsplash.com/photo-1522273400909-fd1a8f77637e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
     price: 1500,
@@ -12,6 +13,7 @@ export default [
 
   {
     id: 2,
+    quantity: 1,
     image:
       "https://images.unsplash.com/photo-1583225173317-5de81344a54e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1130&q=80",
     price: 1000,
@@ -22,6 +24,7 @@ export default [
 
   {
     id: 3,
+    quantity: 1,
     image:
       "https://images.unsplash.com/photo-1507457379470-08b800bebc67?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1384&q=80",
     price: 499,

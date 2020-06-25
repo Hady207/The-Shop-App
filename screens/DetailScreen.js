@@ -1,15 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { View, Text, StyleSheet, ImageBackground, Button } from "react-native";
+import { UserContext } from "../context/ShoppingContext";
 
 import MyText from "../components/Mytext";
 
-const image = {
-  uri:
-    "https://images.unsplash.com/photo-1522273400909-fd1a8f77637e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2000&q=80",
-};
-
 const DetailScreen = ({ route, navigation }) => {
   const { data } = route.params;
+  const { dispatch } = useContext(UserContext);
   // console.log(navigation);
   navigation.setOptions({
     title: data.name,
@@ -30,7 +27,9 @@ const DetailScreen = ({ route, navigation }) => {
           <MyText style={styles.desc}>{data.details}</MyText>
           <Button
             title="Add to cart"
-            onPress={() => navigation.navigate("Cart", { product: data })}
+            // onPress={() => navigation.navigate("Cart", { product: data })}
+            // onPress={() => handleAddingToCart(data)}
+            onPress={() => dispatch({ type: "AddToCart", payload: data })}
           />
         </View>
       </View>

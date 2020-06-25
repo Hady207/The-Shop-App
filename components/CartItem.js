@@ -1,8 +1,17 @@
 import React from "react";
-import { StyleSheet, Text, View, Image, TextInput } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
+import { Entypo } from "@expo/vector-icons";
 import Mytext from "./Mytext";
 import Amount from "./Amount";
-const CartItem = ({ product }) => {
+
+const CartItem = ({ product, dispatch }) => {
   return (
     <View style={styles.list}>
       <View style={styles.product}>
@@ -15,7 +24,19 @@ const CartItem = ({ product }) => {
           />
         </View>
         <View styles={styles.details}>
-          <Mytext style={styles.name}>{product.name}</Mytext>
+          <View styles={styles.cartContainer}>
+            <Mytext style={styles.name}>{product.name}</Mytext>
+            <TouchableOpacity
+              onPress={() =>
+                dispatch({
+                  type: "RemoveFromCart",
+                  payload: product,
+                })
+              }
+            >
+              <Entypo name="cross" size={30} color="red" />
+            </TouchableOpacity>
+          </View>
           <View style={styles.priceContainer}>
             <Amount />
             <Mytext style={styles.price}>${product.price}</Mytext>
@@ -52,7 +73,14 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: "cover",
   },
-  details: {},
+  details: { flex: 1 },
+  cartContainer: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "center",
+    width: 250,
+    backgroundColor: "red",
+  },
   priceContainer: {
     flexDirection: "row",
     alignItems: "center",
@@ -69,5 +97,6 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 17,
+    marginLeft: 10,
   },
 });

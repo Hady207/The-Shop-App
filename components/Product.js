@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import {
   StyleSheet,
   Platform,
@@ -7,12 +7,35 @@ import {
   TouchableOpacity,
   TouchableNativeFeedback,
 } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import { UserContext } from "../context/ShoppingContext";
+
 import MyText from "./Mytext";
+import { CartButton } from "./Buttons";
 
 const Product = (props) => {
   const { data } = props;
-  // console.log(data);
+  const { cart, dispatch } = useContext(UserContext);
+  const [addedToCart, setAddedToCart] = useState(false);
+
+  const hanldeCartButtonPress = () => {
+    if (addedToCart) {
+      dispatch({
+        type: "RemoveFromCart",
+        payload: data,
+      });
+    } else {
+      dispatch({
+        type: "AddToCart",
+        payload: data,
+      });
+    }
+    if (cart.includes(data)) {
+      setAddedToCart(true);
+    } else {
+      setAddedToCart(false);
+    }
+  };
+
   let Touch =
     Platform.OS === "android" && Platform.Version > 21
       ? TouchableNativeFeedback
@@ -33,9 +56,10 @@ const Product = (props) => {
         <MyText style={styles.productName}>{data.name}</MyText>
         <View style={styles.buttons}>
           <MyText style={styles.price}>${data.price}</MyText>
-          <TouchableOpacity style={styles.addtoButton}>
-            <Ionicons name="md-cart" size={27} color="orangered" />
-          </TouchableOpacity>
+          <CartButton
+            onPress={hanldeCartButtonPress}
+            mycolor={addedToCart ? "green" : "orangered"}
+          />
         </View>
       </View>
     </Touch>

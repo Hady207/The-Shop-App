@@ -1,29 +1,28 @@
 import "react-native-gesture-handler";
 
-import React, { useState } from "react";
+import React, { useState, createContext, useReducer } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
-
+import { cartManagement } from "./hooks/useReducer";
+import { UserContext } from "./context/ShoppingContext";
 import { NavigationContainer } from "@react-navigation/native";
-import { createStackNavigator } from "@react-navigation/stack";
 
-import ProductOverview from "./screens/ProductOverview";
-import DetailScreen from "./screens/DetailScreen";
-import Cart from "./screens/Cart";
+import StackNavigation from "./Navigation/StackNavigation";
 
 const fetchFonts = () => {
   return Font.loadAsync({
     Roboto: require("./assets/fonts/Roboto-Regular.ttf"),
-    "Roboto-meduim": require("./assets/fonts/Roboto-Medium.ttf"),
+    "Roboto-medium": require("./assets/fonts/Roboto-Medium.ttf"),
     "Roboto-bold": require("./assets/fonts/Roboto-Bold.ttf"),
   });
 };
 
-const { Navigator, Screen } = createStackNavigator();
-
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
+
+  const [cart, dispatch] = cartManagement();
+
   if (!fontLoaded) {
     return (
       <AppLoading
@@ -32,37 +31,12 @@ export default function App() {
       />
     );
   }
+
   return (
     <NavigationContainer>
-      <Navigator>
-        <Screen
-          name="Home"
-          component={ProductOverview}
-          options={{
-            title: "Overview",
-            headerTitleStyle: { fontWeight: "bold" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Screen
-          name="Product"
-          component={DetailScreen}
-          options={{
-            title: "Product",
-            headerTitleStyle: { fontWeight: "bold" },
-            headerTitleAlign: "center",
-          }}
-        />
-        <Screen
-          name="Cart"
-          component={Cart}
-          options={{
-            title: "My Cart",
-            headerTitleStyle: { fontWeight: "bold" },
-            headerTitleAlign: "center",
-          }}
-        />
-      </Navigator>
+      <UserContext.Provider value={{ cart, dispatch }}>
+        <StackNavigation />
+      </UserContext.Provider>
     </NavigationContainer>
   );
 }
