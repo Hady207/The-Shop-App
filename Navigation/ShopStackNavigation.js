@@ -15,9 +15,13 @@ const homeScreenOptions = {
     marginRight: 10,
     alignSelf: "center",
   },
+  headerLeftContainerStyle: {
+    marginLeft: 10,
+    alignSelf: "center",
+  },
 };
 
-const StackNavigation = () => {
+const ShopStackNavigation = () => {
   return (
     <Navigator>
       <Screen
@@ -47,4 +51,4 @@ const StackNavigation = () => {
   );
 };
 
-export default StackNavigation;
+export default ShopStackNavigation;

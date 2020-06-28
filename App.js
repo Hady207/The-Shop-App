@@ -8,7 +8,7 @@ import { AppLoading } from "expo";
 import Store, { UserContext } from "./context/ShoppingContext";
 import { NavigationContainer } from "@react-navigation/native";
 
-import StackNavigation from "./Navigation/StackNavigation";
+import DrawerNavigation from "./Navigation/DrawerNavigation";
 
 const fetchFonts = () => {
   return Font.loadAsync({
@@ -35,7 +35,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Store>
-        <StackNavigation />
+        {/* <StackNavigation /> */}
+        <DrawerNavigation />
       </Store>
     </NavigationContainer>
   );

@@ -2,6 +2,14 @@ import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
+const DrawerMenuButton = (props) => {
+  return (
+    <TouchableOpacity {...props}>
+      <Ionicons name="ios-menu" size={27} color="black" />
+    </TouchableOpacity>
+  );
+};
+
 const CartButtonMenu = (props) => {
   return (
     <TouchableOpacity {...props}>
@@ -39,7 +47,13 @@ const CartButtonRemove = (props) => {
   );
 };
 
-export { CartButton, CartButtonMenu, CartButtonAdd, CartButtonRemove };
+export {
+  DrawerMenuButton,
+  CartButton,
+  CartButtonMenu,
+  CartButtonAdd,
+  CartButtonRemove,
+};
 
 const styles = StyleSheet.create({
   notif: {
