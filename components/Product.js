@@ -15,10 +15,12 @@ import { CartButton } from "./Buttons";
 const Product = (props) => {
   const { data } = props;
   const { cart, dispatch } = useContext(UserContext);
-  const [addedToCart, setAddedToCart] = useState(false);
+  const [addToCart, setAddToCart] = useState(cart.includes(data));
+
+  console.log(`inside before function product card ${data.name}`, addToCart);
 
   const hanldeCartButtonPress = () => {
-    if (addedToCart) {
+    if (addToCart) {
       dispatch({
         type: "RemoveFromCart",
         payload: data,
@@ -29,20 +31,24 @@ const Product = (props) => {
         payload: data,
       });
     }
-    if (cart.includes(data)) {
-      setAddedToCart(true);
-    } else {
-      setAddedToCart(false);
-    }
+    setAddToCart((old) => !old);
+    // setAddToCart(!addToCart);
   };
 
+  // one state between a parent and a child
   let Touch =
     Platform.OS === "android" && Platform.Version > 21
       ? TouchableNativeFeedback
       : TouchableOpacity;
   return (
     // navigation.navigate
-    <Touch onPress={() => props.navigation.navigate("Product", { data })}>
+    <Touch
+      onPress={() =>
+        props.navigation.navigate("DetailProduct", {
+          data,
+        })
+      }
+    >
       <View style={styles.card}>
         <View style={styles.cardImage}>
           <Image
@@ -57,8 +63,8 @@ const Product = (props) => {
         <View style={styles.buttons}>
           <MyText style={styles.price}>${data.price}</MyText>
           <CartButton
+            mycolor={cart.includes(data) ? "green" : "orangered"}
             onPress={hanldeCartButtonPress}
-            mycolor={addedToCart ? "green" : "orangered"}
           />
         </View>
       </View>

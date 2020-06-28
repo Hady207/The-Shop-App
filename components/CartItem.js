@@ -12,6 +12,19 @@ import Mytext from "./Mytext";
 import Amount from "./Amount";
 
 const CartItem = ({ product, dispatch }) => {
+  const handleAmountChange = (action) => {
+    if (action === "Add") {
+      dispatch({
+        type: "IncreaseQuantity",
+        payload: product,
+      });
+    } else if (action === "Remove") {
+      dispatch({
+        type: "DecreaseQuantity",
+        payload: product,
+      });
+    }
+  };
   return (
     <View style={styles.list}>
       <View style={styles.product}>
@@ -23,8 +36,8 @@ const CartItem = ({ product, dispatch }) => {
             }}
           />
         </View>
-        <View styles={styles.details}>
-          <View styles={styles.cartContainer}>
+        <View style={styles.details}>
+          <View style={styles.cartContainer}>
             <Mytext style={styles.name}>{product.name}</Mytext>
             <TouchableOpacity
               onPress={() =>
@@ -38,8 +51,10 @@ const CartItem = ({ product, dispatch }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.priceContainer}>
-            <Amount />
-            <Mytext style={styles.price}>${product.price}</Mytext>
+            <Amount quantity={product.quantity} dispatch={handleAmountChange} />
+            <Mytext style={styles.price}>
+              ${product.price * product.quantity}
+            </Mytext>
           </View>
         </View>
       </View>
@@ -57,8 +72,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
-    marginVertical: 5,
-    elevation: 2,
+    // marginVertical: 5,
+    elevation: 4,
+    marginBottom: 10,
   },
   product: {
     flexDirection: "row",
@@ -75,20 +91,21 @@ const styles = StyleSheet.create({
   },
   details: { flex: 1 },
   cartContainer: {
-    flex: 1,
     flexDirection: "row",
-    justifyContent: "center",
-    width: 250,
-    backgroundColor: "red",
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    flex: 1,
   },
   priceContainer: {
     flexDirection: "row",
     alignItems: "center",
-    justifyContent: "space-around",
+    justifyContent: "space-evenly",
   },
   name: {
-    marginLeft: 5,
     fontSize: 19,
+    fontWeight: "bold",
+    textTransform: "capitalize",
+    fontStyle: "italic",
   },
   numbers: {
     borderWidth: 4,
@@ -97,6 +114,7 @@ const styles = StyleSheet.create({
   },
   price: {
     fontSize: 17,
-    marginLeft: 10,
+
+    fontWeight: "bold",
   },
 });

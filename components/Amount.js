@@ -11,17 +11,18 @@ const Amount = (props) => {
   return (
     <View {...props.style}>
       <View style={styles.numberContainer}>
-        <TextInput
+        {/* <TextInput
           style={styles.number}
           value="1"
           maxLength={2}
           keyboardType="numeric"
-        />
+        /> */}
+        <Text style={styles.number}>{props.quantity}</Text>
         <View style={styles.arrows}>
-          <TouchableOpacity onPress={() => console.log("Pressed Up")}>
+          <TouchableOpacity onPress={() => props.dispatch("Add")}>
             <FontAwesome name="chevron-up" size={20} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => console.log("Pressed Down")}>
+          <TouchableOpacity onPress={() => props.dispatch("Remove")}>
             <FontAwesome name="chevron-down" size={20} color="black" />
           </TouchableOpacity>
         </View>
@@ -45,5 +46,6 @@ const styles = StyleSheet.create({
     // width: 100,
     fontSize: 19,
     textAlign: "center",
+    marginLeft: 10,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, StyleSheet, ImageBackground, Button } from "react-native";
 import { UserContext } from "../context/ShoppingContext";
 
@@ -6,12 +6,21 @@ import MyText from "../components/Mytext";
 
 const DetailScreen = ({ route, navigation }) => {
   const { data } = route.params;
-  const { dispatch } = useContext(UserContext);
+  const { cart, dispatch } = useContext(UserContext);
+  const [addToCart, setAddToCart] = useState(cart.includes(data));
+
+  // console.log("detail screen", cart.includes(data));
   // console.log(navigation);
   navigation.setOptions({
     title: data.name,
     headerTitleStyle: { textTransform: "uppercase" },
   });
+
+  const handleAddingToCart = () => {
+    dispatch({ type: "AddToCart", payload: data });
+    setAddToCart(!addToCart);
+  };
+
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
@@ -25,12 +34,11 @@ const DetailScreen = ({ route, navigation }) => {
       <View style={styles.boxContainer}>
         <View style={styles.box}>
           <MyText style={styles.desc}>{data.details}</MyText>
-          <Button
-            title="Add to cart"
-            // onPress={() => navigation.navigate("Cart", { product: data })}
-            // onPress={() => handleAddingToCart(data)}
-            onPress={() => dispatch({ type: "AddToCart", payload: data })}
-          />
+          {addToCart ? (
+            <Button title="in the cart" color="red" />
+          ) : (
+            <Button title="Add to cart" onPress={handleAddingToCart} />
+          )}
         </View>
       </View>
     </View>

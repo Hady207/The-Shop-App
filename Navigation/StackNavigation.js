@@ -8,7 +8,7 @@ import Cart from "../screens/Cart";
 const { Navigator, Screen } = createStackNavigator();
 
 const homeScreenOptions = {
-  title: "Overview",
+  title: "Home",
   headerTitleStyle: { fontWeight: "bold" },
   headerTitleAlign: "center",
   headerRightContainerStyle: {
@@ -26,7 +26,7 @@ const StackNavigation = () => {
         options={homeScreenOptions}
       />
       <Screen
-        name="Product"
+        name="DetailProduct"
         component={DetailScreen}
         options={{
           title: "Product",

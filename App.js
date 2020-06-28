@@ -4,8 +4,8 @@ import React, { useState, createContext, useReducer } from "react";
 import { StyleSheet, Text, View, ScrollView } from "react-native";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
-import { cartManagement } from "./hooks/useReducer";
-import { UserContext } from "./context/ShoppingContext";
+// import { cartManagement } from "./hooks/useReducer";
+import Store, { UserContext } from "./context/ShoppingContext";
 import { NavigationContainer } from "@react-navigation/native";
 
 import StackNavigation from "./Navigation/StackNavigation";
@@ -21,7 +21,7 @@ const fetchFonts = () => {
 export default function App() {
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  const [cart, dispatch] = cartManagement();
+  // const [cart, dispatch] = cartManagement();
 
   if (!fontLoaded) {
     return (
@@ -34,9 +34,9 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      <UserContext.Provider value={{ cart, dispatch }}>
+      <Store>
         <StackNavigation />
-      </UserContext.Provider>
+      </Store>
     </NavigationContainer>
   );
 }

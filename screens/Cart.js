@@ -12,15 +12,11 @@ import { UserContext } from "../context/ShoppingContext";
 import Mytext from "../components/Mytext";
 import CartItem from "../components/CartItem";
 
-const shoppingCart = [];
-
 const Cart = ({ route }) => {
   // const { product } = route.params;
   const { cart, dispatch } = useContext(UserContext);
   console.log(cart);
-  // console.log(product);
-  // shoppingCart.push(product);
-  // setCart((oldProduct) => [...oldProduct, product]);
+
   return (
     <View style={styles.screen}>
       <ScrollView>
@@ -37,7 +33,7 @@ const Cart = ({ route }) => {
         <Mytext style={styles.totalText}>
           $
           {cart && cart.length > 0
-            ? cart.reduce((sum, objA) => sum + objA.price, 0)
+            ? cart.reduce((sum, objA) => sum + objA.price * objA.quantity, 0)
             : 0}
         </Mytext>
       </View>
