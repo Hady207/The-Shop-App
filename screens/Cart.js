@@ -14,15 +14,19 @@ import CartItem from "../components/CartItem";
 
 const Cart = ({ route }) => {
   // const { product } = route.params;
-  const { cart, dispatch } = useContext(UserContext);
-  console.log(cart);
+  const { cart, cartDispatch } = useContext(UserContext);
 
   return (
     <View style={styles.screen}>
       <ScrollView>
         {cart ? (
           cart.map((prod) => (
-            <CartItem key={prod.id} product={prod} dispatch={dispatch} />
+            <CartItem
+              key={prod.id}
+              product={prod}
+              dispatch={cartDispatch}
+              handleTotalPrice={handleTotalPrice}
+            />
           ))
         ) : (
           <Mytext style={styles.empty}>The cart is Empty</Mytext>
@@ -33,7 +37,7 @@ const Cart = ({ route }) => {
         <Mytext style={styles.totalText}>
           $
           {cart && cart.length > 0
-            ? cart.reduce((sum, objA) => sum + objA.price * objA.quantity, 0)
+            ? cart.reduce((sum, objA) => sum + objA.price, 0)
             : 0}
         </Mytext>
       </View>

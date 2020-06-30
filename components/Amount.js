@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
+
 const Amount = (props) => {
   return (
     <View {...props.style}>
@@ -19,10 +20,10 @@ const Amount = (props) => {
         /> */}
         <Text style={styles.number}>{props.quantity}</Text>
         <View style={styles.arrows}>
-          <TouchableOpacity onPress={() => props.dispatch("Add")}>
+          <TouchableOpacity onPress={() => props.dispatch("increase")}>
             <FontAwesome name="chevron-up" size={20} color="black" />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => props.dispatch("Remove")}>
+          <TouchableOpacity onPress={() => props.dispatch("decrease")}>
             <FontAwesome name="chevron-down" size={20} color="black" />
           </TouchableOpacity>
         </View>

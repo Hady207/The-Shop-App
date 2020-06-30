@@ -1,11 +1,28 @@
 import React from "react";
 import { TouchableOpacity, View, Text, StyleSheet } from "react-native";
-import { Ionicons } from "@expo/vector-icons";
+import {
+  Ionicons,
+  Entypo,
+  MaterialIcons,
+  FontAwesome5,
+} from "@expo/vector-icons";
 
 const DrawerMenuButton = (props) => {
   return (
     <TouchableOpacity {...props}>
-      <Ionicons name="ios-menu" size={27} color="black" />
+      <Ionicons
+        name="ios-menu"
+        size={props.size ? props.size : 27}
+        color="black"
+      />
+    </TouchableOpacity>
+  );
+};
+
+const DrawerMenuCloseButton = (props) => {
+  return (
+    <TouchableOpacity {...props}>
+      <Entypo name="cross" size={props.size ? props.size : 25} color="black" />
     </TouchableOpacity>
   );
 };
@@ -18,7 +35,11 @@ const CartButtonMenu = (props) => {
           <Text style={styles.number}>{props.cartLength}</Text>
         </View>
       )}
-      <Ionicons name="md-cart" size={27} color="black" />
+      <Ionicons
+        name="md-cart"
+        size={props.size ? props.size : 27}
+        color="black"
+      />
     </TouchableOpacity>
   );
 };
@@ -34,7 +55,11 @@ const CartButton = (props) => {
 const CartButtonAdd = (props) => {
   return (
     <TouchableOpacity {...props}>
-      <Ionicons name="md-cart" size={27} color="orangered" />
+      <Ionicons
+        name="md-cart"
+        size={props.size ? props.size : 27}
+        color="orangered"
+      />
     </TouchableOpacity>
   );
 };
@@ -42,17 +67,48 @@ const CartButtonAdd = (props) => {
 const CartButtonRemove = (props) => {
   return (
     <TouchableOpacity {...props}>
-      <Ionicons name="md-cart" size={27} color="green" />
+      <Ionicons
+        name="md-cart"
+        size={props.size ? props.size : 27}
+        color="green"
+      />
+    </TouchableOpacity>
+  );
+};
+
+const AddProductButton = (props) => {
+  return (
+    <TouchableOpacity {...props}>
+      <MaterialIcons
+        name="add"
+        size={props.size ? props.size : 27}
+        color="green"
+      />
+    </TouchableOpacity>
+  );
+};
+
+const EditProductButton = (props) => {
+  return (
+    <TouchableOpacity {...props}>
+      <FontAwesome5
+        name="edit"
+        size={props.size ? props.size : 27}
+        color="#f05e23"
+      />
     </TouchableOpacity>
   );
 };
 
 export {
   DrawerMenuButton,
+  DrawerMenuCloseButton,
   CartButton,
   CartButtonMenu,
   CartButtonAdd,
   CartButtonRemove,
+  AddProductButton,
+  EditProductButton,
 };
 
 const styles = StyleSheet.create({

@@ -5,35 +5,38 @@ import { UserContext } from "../context/ShoppingContext";
 import MyText from "../components/Mytext";
 
 const DetailScreen = ({ route, navigation }) => {
-  const { data } = route.params;
-  const { cart, dispatch } = useContext(UserContext);
-  const [addToCart, setAddToCart] = useState(cart.includes(data));
+  const { product } = route.params;
+  const { cart, cartDispatch } = useContext(UserContext);
+  const [addToCart, setAddToCart] = useState(cart.includes(product));
 
   // console.log("detail screen", cart.includes(data));
   // console.log(navigation);
   navigation.setOptions({
-    title: data.name,
+    title: product.title,
     headerTitleStyle: { textTransform: "uppercase" },
   });
 
   const handleAddingToCart = () => {
-    dispatch({ type: "AddToCart", payload: data });
+    cartDispatch({ type: "AddToCart", payload: product });
     setAddToCart(!addToCart);
   };
 
   return (
     <View style={styles.screen}>
       <View style={styles.imageContainer}>
-        <ImageBackground source={{ uri: data.image }} style={styles.image}>
+        <ImageBackground
+          source={{ uri: product.imageUrl }}
+          style={styles.image}
+        >
           <View style={styles.backgroundText}>
-            <MyText style={styles.title}>{data.name}</MyText>
-            <MyText style={styles.price}>{data.price}</MyText>
+            <MyText style={styles.title}>{product.title}</MyText>
+            <MyText style={styles.price}>{product.price}</MyText>
           </View>
         </ImageBackground>
       </View>
       <View style={styles.boxContainer}>
         <View style={styles.box}>
-          <MyText style={styles.desc}>{data.details}</MyText>
+          <MyText style={styles.desc}>{product.description}</MyText>
           {addToCart ? (
             <Button title="in the cart" color="red" />
           ) : (

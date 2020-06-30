@@ -10,25 +10,23 @@ import {
 import { UserContext } from "../context/ShoppingContext";
 
 import MyText from "./Mytext";
-import { CartButton } from "./Buttons";
+import { CartButton, EditProductButton } from "./Buttons";
 
 const Product = (props) => {
-  const { data } = props;
-  const { cart, dispatch } = useContext(UserContext);
-  const [addToCart, setAddToCart] = useState(cart.includes(data));
-
-  console.log(`inside before function product card ${data.name}`, addToCart);
+  const { product } = props;
+  const { cart, cartDispatch } = useContext(UserContext);
+  const [addToCart, setAddToCart] = useState(cart.includes(product));
 
   const hanldeCartButtonPress = () => {
     if (addToCart) {
-      dispatch({
+      cartDispatch({
         type: "RemoveFromCart",
-        payload: data,
+        payload: product,
       });
     } else {
-      dispatch({
+      cartDispatch({
         type: "AddToCart",
-        payload: data,
+        payload: product,
       });
     }
     setAddToCart((old) => !old);
@@ -43,11 +41,7 @@ const Product = (props) => {
   return (
     // navigation.navigate
     <Touch
-      onPress={() =>
-        props.navigation.navigate("DetailProduct", {
-          data,
-        })
-      }
+      onPress={() => props.navigation.navigate("DetailProduct", { product })}
     >
       <View style={styles.card}>
         <View style={styles.cardImage}>
@@ -55,15 +49,16 @@ const Product = (props) => {
             resizeMode="cover"
             style={styles.image}
             source={{
-              uri: data.image,
+              uri: product.imageUrl,
             }}
           />
         </View>
-        <MyText style={styles.productName}>{data.name}</MyText>
+        <MyText style={styles.productName}>{product.title}</MyText>
         <View style={styles.buttons}>
-          <MyText style={styles.price}>${data.price}</MyText>
+          {product.ownerId === "Hadi207" && <EditProductButton />}
+          <MyText style={styles.price}>${product.price}</MyText>
           <CartButton
-            mycolor={cart.includes(data) ? "green" : "orangered"}
+            mycolor={cart.includes(product) ? "green" : "orangered"}
             onPress={hanldeCartButtonPress}
           />
         </View>

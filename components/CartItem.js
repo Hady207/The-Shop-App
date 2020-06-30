@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   StyleSheet,
   Text,
@@ -12,19 +12,30 @@ import Mytext from "./Mytext";
 import Amount from "./Amount";
 
 const CartItem = ({ product, dispatch }) => {
+  // const handleAmountChange = (action) => {
+  //   if (action === "Add") {
+  //     dispatch({
+  //       type: "IncreaseQuantity",
+  //       payload: product,
+  //     });
+  //   } else if (action === "Remove") {
+  //     dispatch({
+  //       type: "DecreaseQuantity",
+  //       payload: product,
+  //     });
+  //   }
+  // };
+
+  const [amount, setAmount] = useState(1);
+
   const handleAmountChange = (action) => {
-    if (action === "Add") {
-      dispatch({
-        type: "IncreaseQuantity",
-        payload: product,
-      });
-    } else if (action === "Remove") {
-      dispatch({
-        type: "DecreaseQuantity",
-        payload: product,
-      });
+    if (action === "increase" && amount < 99) {
+      setAmount((c) => c + 1);
+    } else if (action === "decrease" && amount > 1) {
+      setAmount((c) => c - 1);
     }
   };
+
   return (
     <View style={styles.list}>
       <View style={styles.product}>
@@ -32,13 +43,13 @@ const CartItem = ({ product, dispatch }) => {
           <Image
             style={styles.image}
             source={{
-              uri: product.image,
+              uri: product.imageUrl,
             }}
           />
         </View>
         <View style={styles.details}>
           <View style={styles.cartContainer}>
-            <Mytext style={styles.name}>{product.name}</Mytext>
+            <Mytext style={styles.name}>{product.title}</Mytext>
             <TouchableOpacity
               onPress={() =>
                 dispatch({
@@ -51,10 +62,8 @@ const CartItem = ({ product, dispatch }) => {
             </TouchableOpacity>
           </View>
           <View style={styles.priceContainer}>
-            <Amount quantity={product.quantity} dispatch={handleAmountChange} />
-            <Mytext style={styles.price}>
-              ${product.price * product.quantity}
-            </Mytext>
+            <Amount quantity={amount} dispatch={handleAmountChange} />
+            <Mytext style={styles.price}>${product.price * amount}</Mytext>
           </View>
         </View>
       </View>

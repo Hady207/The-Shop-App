@@ -37,7 +37,7 @@ const cartManagement = (initVal = []) => {
     }
   };
 
-  return ([cart, dispatch] = useReducer(reducer, initVal));
+  return ([cart, cartDispatch] = useReducer(reducer, initVal));
 };
 
 export { cartManagement };

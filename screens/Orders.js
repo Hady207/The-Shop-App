@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
 import { UserContext } from "../context/ShoppingContext";
 import { DrawerMenuButton, CartButtonMenu } from "../components/Buttons";
+
+import Order from "../components/Order";
 
 const Orders = ({ navigation }) => {
   const { cart } = useContext(UserContext);
@@ -19,15 +21,21 @@ const Orders = ({ navigation }) => {
   });
 
   return (
-    <View style={styles.screen}>
-      <Text>Orders Screen</Text>
-    </View>
+    <ScrollView style={styles.scrollView}>
+      <Order />
+      <Order />
+      <Order />
+    </ScrollView>
   );
 };
 
 export default Orders;
 
 const styles = StyleSheet.create({
+  scrollView: {
+    padding: 10,
+    flex: 1,
+  },
   screen: {
     flex: 1,
     alignItems: "center",

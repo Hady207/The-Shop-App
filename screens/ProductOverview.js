@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyleSheet, ScrollView } from "react-native";
+import { StyleSheet, ScrollView, FlatList } from "react-native";
 
 import Database from "../seed/data";
 import { UserContext } from "../context/ShoppingContext";
@@ -7,7 +7,9 @@ import Product from "../components/Product";
 import { DrawerMenuButton, CartButtonMenu } from "../components/Buttons";
 
 const ProductOverview = ({ navigation }) => {
-  const { cart } = useContext(UserContext);
+  const { products, cart } = useContext(UserContext);
+  const { availableProducts } = products;
+
   navigation.setOptions({
     headerRight: () => (
       <CartButtonMenu
@@ -20,11 +22,19 @@ const ProductOverview = ({ navigation }) => {
     ),
   });
   return (
-    <ScrollView style={styles.container}>
-      {Database.map((data) => (
-        <Product key={data.id} navigation={navigation} data={data} />
-      ))}
-    </ScrollView>
+    // <ScrollView style={styles.container}>
+    //   {availableProducts.map((data) => (
+    //     <Product key={data.id} navigation={navigation} product={data} />
+    //   ))}
+    // </ScrollView>
+    <FlatList
+      style={styles.container}
+      data={availableProducts}
+      renderItem={({ item }) => (
+        <Product navigation={navigation} product={item} />
+      )}
+      keyExtractor={(item) => item.id}
+    />
   );
 };
 
